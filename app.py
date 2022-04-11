@@ -46,6 +46,9 @@ def unknown_text(update, context):
 def unknown(update, context):
     update.message.reply_text(
         "Sorry '%s' is not a valid command" % update.message.text)
+    
+def error(update, context):
+    context.bot.send_message(update.message.chat.id, "Oops! Error encountered!")    
 
 #main logic
 def main():
