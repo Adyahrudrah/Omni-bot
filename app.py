@@ -4,7 +4,7 @@ import  os
 import json
 
 #telegram token
-TOKEN = os.environ.get("TELEGRAM_ID")
+TOKEN = os.environ.get("5228089500:AAGTi1w-EVUOMef5EbtRmwnjiadUC8_Pxw0")
 
 #commandhandler for start command
 def start(update, context):
@@ -47,7 +47,7 @@ def main():
     #to start webhook
     updater.start_webhook(listen="0.0.0.0",port=os.environ.get("PORT",443),
                           url_path=TOKEN,
-                          webhook_url="https://mimic-app.herokuapp.com/"+TOKEN)
+                          webhook_url="https://omni-bot.herokuapp.com/"+TOKEN)
     updater.idle()
 
 #start application with main function
