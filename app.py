@@ -57,19 +57,19 @@ def unknown(update: Update, context: CallbackContext):
         "Sorry '%s' is not a valid command" % update.message.text)
 
 def main():
-updater.dispatcher.add_handler(CommandHandler('start', start))
-updater.dispatcher.add_handler(CommandHandler('help', help))
-updater.dispatcher.add_handler(CommandHandler('dict', Online_Dict))
-updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown))
-updater.dispatcher.add_handler(MessageHandler(
-    # Filters out unknown commands
-    Filters.command, unknown))
+	updater.dispatcher.add_handler(CommandHandler('start', start))
+	updater.dispatcher.add_handler(CommandHandler('help', help))
+	updater.dispatcher.add_handler(CommandHandler('dict', Online_Dict))
+	updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown))
+	updater.dispatcher.add_handler(MessageHandler(
+	    # Filters out unknown commands
+	    Filters.command, unknown))
 
-# Filters out unknown messages.
-updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown_text))
+	# Filters out unknown messages.
+	updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown_text))
 
-updater.start_webhook(listen="0..0.0.0", port=os.environ.get("PORT", 443), url_path=TOKEN, webhook_url="https://omni--bot@herokuapp.com/"+TOKEN)
-    updater.idle()
+	updater.start_webhook(listen="0..0.0.0", port=os.environ.get("PORT", 443), url_path=TOKEN, webhook_url="https://omni--bot@herokuapp.com/"+TOKEN)
+	updater.idle()
 
 #start application with main function
 if __name__ == '__main__':
