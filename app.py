@@ -3,6 +3,7 @@ from telegram.ext import  CommandHandler, MessageHandler, Filters
 import json
 import requests
 import os
+import time
 
 #telegram token
 TOKEN = "5228089500:AAGTi1w-EVUOMef5EbtRmwnjiadUC8_Pxw0"
@@ -17,6 +18,7 @@ def start(update, context):
 
         
 def Online_Dict(update, context):
+    time.sleep(3)
     x = context.args[0]
     r = requests.get(f'https://api.dictionaryapi.dev/api/v2/entries/en/{x}')
     data = json.loads(r.text)
