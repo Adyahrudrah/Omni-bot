@@ -52,7 +52,7 @@ def main():
     
     #to get the updates from bot
     updater = Updater(token=TOKEN, use_context=True)
-    
+
     #to dispatch the updates to respective handlers
     updater.dispatcher.add_handler(CommandHandler('start', start))
     updater.dispatcher.add_handler(CommandHandler('help', help))
@@ -62,12 +62,12 @@ def main():
         # Filters out unknown commands
         Filters.command, unknown))
 
-# Filters out unknown messages.
+    # Filters out unknown messages.
     updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown_text))
 
 
-     updater.dispatcher.add_error_handler(error)
-    
+    updater.dispatcher.add_error_handler(error)
+
     #to start webhook
     updater.start_webhook(listen="0.0.0.0",port=os.environ.get("PORT",443),
                           url_path=TOKEN,
