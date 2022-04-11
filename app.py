@@ -4,7 +4,7 @@ import  os
 import json
 
 #telegram token
-TOKEN = os.environ.get("5228089500:AAGTi1w-EVUOMef5EbtRmwnjiadUC8_Pxw0")
+TOKEN = "5228089500:AAGTi1w-EVUOMef5EbtRmwnjiadUC8_Pxw0"
 
 #commandhandler for start command
 def start(update, context):
