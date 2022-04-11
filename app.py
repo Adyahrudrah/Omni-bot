@@ -7,7 +7,7 @@ import json
 TOKEN = "5228089500:AAGTi1w-EVUOMef5EbtRmwnjiadUC8_Pxw0"
 
 #commandhandler for start command
-def start(update: Update, context: CallbackContext):
+def start(update, context):
     update.message.reply_text("""
     Available Commands:
     /help --> Get help
@@ -15,7 +15,7 @@ def start(update: Update, context: CallbackContext):
     """)
 
         
-def Online_Dict(update: Update, context: CallbackContext):
+def Online_Dict(update, context):
     x = context.args[0]
     r = requests.get(f'https://api.dictionaryapi.dev/api/v2/entries/en/{x}')
     data = json.loads(r.text)
@@ -34,16 +34,16 @@ def Online_Dict(update: Update, context: CallbackContext):
         print("")
         
 
-def help(update: Update, context: CallbackContext):
+def help(update, context):
     update.message.reply_text("You can waste your time here")
 
 
-def unknown_text(update: Update, context: CallbackContext):
+def unknown_text(update, context):
     update.message.reply_text(
         "Sorry I can't recognize you , you said '%s'" % update.message.text)
   
   
-def unknown(update: Update, context: CallbackContext):
+def unknown(update, context):
     update.message.reply_text(
         "Sorry '%s' is not a valid command" % update.message.text)
 
