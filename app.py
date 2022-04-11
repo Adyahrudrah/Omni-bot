@@ -6,7 +6,7 @@ import os
 import time
 
 #telegram token
-TOKEN = "5228089500:AAGTi1w-EVUOMef5EbtRmwnjiadUC8_Pxw0"
+TOKEN = os.environ.get("API_KEY")
 
 #commandhandler for start command
 def start(update, context):
