@@ -4,6 +4,7 @@ import requests
 import os
 import time
 import urllib
+from telegram import *
 import telegram
 
 #telegram token
