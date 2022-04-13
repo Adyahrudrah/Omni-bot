@@ -14,7 +14,10 @@ headers = {'user-agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 bot = telegram.Bot(token=TOKEN)
 
 def start(update, context):
-    update.message.reply_text("It's movie time, Let's dive in!")
+    update.message.reply_text("❤️It's movie time, Let's dive in!❤️")
+    buttons = [[KeyboardButton("/flick interstellar")],[KeyboardButton("/flick gravity")]]
+    context.bot.send_message(chat_id=update.effective_chat.id, text="welcome to my bot",
+    reply_markup = ReplyKeyboardMarkup(buttons))
 
 
 def imdb(update, context):
@@ -33,7 +36,8 @@ def imdb(update, context):
             update.message.reply_text(imdb_title)
             update.message.bot.send_photo(update.message.chat_id, movie_banner)
             enc_movie = urllib.parse.quote(imdb_title+quality+movie_type) 
-            magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://tracker.leechers-paradise.org:6969&udp://p4p.arenabg.ch:1337&udp://tracker.internetwarriors.net:1337'  
+            if quality == "720p":
+                magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://tracker.leechers-paradise.org:6969&udp://p4p.arenabg.ch:1337&udp://tracker.internetwarriors.net:1337'  
             headers = {
             'accept': 'application/json',
             'Authorization': 'Bearer briefly',
@@ -64,7 +68,8 @@ def imdb(update, context):
                 update.message.reply_text(imdb_title)
                 update.message.bot.send_photo(update.message.chat_id, movie_banner)
                 enc_movie = urllib.parse.quote(imdb_title+quality+movie_type)
-                magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://tracker.leechers-paradise.org:6969&udp://p4p.arenabg.ch:1337&udp://tracker.internetwarriors.net:1337'
+                if quality == "720p":
+                    magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://tracker.leechers-paradise.org:6969&udp://p4p.arenabg.ch:1337&udp://tracker.internetwarriors.net:1337'
                 headers = {
                 'accept': 'application/json',
                 'Authorization': 'Bearer briefly',
@@ -106,8 +111,8 @@ def main():
     updater = Updater(token=TOKEN, use_context=True)
 
     #to dispatch the updates to respective handlers
-    updater.dispatcher.add_handler(CommandHandler('Start', start))
-    updater.dispatcher.add_handler(CommandHandler('imdb', imdb))
+    updater.dispatcher.add_handler(CommandHandler('start', start))
+    updater.dispatcher.add_handler(CommandHandler('flick', imdb))
     updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown_text))
     updater.dispatcher.add_handler(MessageHandler(Filters.command, unknown))
     updater.dispatcher.add_error_handler(error)
