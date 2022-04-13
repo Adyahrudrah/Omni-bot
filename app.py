@@ -9,6 +9,7 @@ import telegram
 
 #telegram token
 TOKEN = os.environ.get("API_KEY")
+TOKEN_TINY_URL = os.environ.get("API_KEY_TINY")
 
 headers = {'user-agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246"}
 bot = telegram.Bot(token=TOKEN)
@@ -46,7 +47,7 @@ def imdb(update, context):
             }
 
             params = {
-            'api_token': 'V134WkurdBj9CaZgjv0Fj67vO7zIZf02DLmbXJpTu8TjMDfbtTmKaN46BrH3'
+            'api_token': TOKEN_TINY_URL
             }
 
             json_data = {
