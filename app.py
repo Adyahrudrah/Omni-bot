@@ -1,5 +1,4 @@
-from telegram.ext import Updater
-from telegram.ext import  CommandHandler, MessageHandler, Filters
+from telegram.ext import *
 import json
 import requests
 import os
