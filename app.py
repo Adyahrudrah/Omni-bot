@@ -5,6 +5,7 @@ import requests
 import os
 import time
 import urllib
+import telegram
 
 #telegram token
 TOKEN = os.environ.get("API_KEY")
