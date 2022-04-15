@@ -20,7 +20,7 @@ def start(update, context):
     text=f"Looking for a Movie? Click this command to copy 👉 `/Search Interstellar`",  parse_mode=telegram.ParseMode.MARKDOWN)
     context.bot.send_message(chat_id=update.effective_chat.id, text="""<---Available commands--->
     /Help, /Search '{Movie Name}'
-    /Download {id}"""))
+    /Download {id}""")
 
 def Help(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
