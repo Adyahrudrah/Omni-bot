@@ -1,11 +1,10 @@
+from telegram import *
 from telegram.ext import *
 import json
 import requests
 import os
-import time
-import urllib
-from telegram import *
 import telegram
+import urllib.parse
 
 #telegram token
 TOKEN = os.environ.get("API_KEY")
@@ -15,109 +14,136 @@ headers = {'user-agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 bot = telegram.Bot(token=TOKEN)
 
 def start(update, context):
-    update.message.reply_text("❤️It's movie time, Let's dive in!❤️")
-    buttons = [[KeyboardButton("/flick interstellar")],[KeyboardButton("/flick gravity")]]
-    context.bot.send_message(chat_id=update.effective_chat.id, text="welcome to my bot",
-    reply_markup = ReplyKeyboardMarkup(buttons))
+    user_name = update.effective_chat.username
+    help_button = [[KeyboardButton('/Help')]]
+    context.bot.send_message(chat_id=update.effective_chat.id, text=f"Hello {user_name} Welcome to Omni--Bot (Dev: S1V4P4ND1)")
+    context.bot.send_message(chat_id=update.effective_chat.id,
+    text=f"Lokking for a Movie? Click this command to copy 👉 `/Search Interstellar`",  parse_mode=telegram.ParseMode.MARKDOWN)
+    context.bot.send_message(chat_id=update.effective_chat.id, text="""<---Available commands--->
+    /Help, /Search '{Movie Name}'
+    /Download {id}""",
+     reply_markup=ReplyKeyboardMarkup(help_button, resize_keyboard=True, one_time_keyboard=True))
 
+def Help(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id,
+    text=f"Looking for a Movie? Click this command to copy 👉 `/Search Interstellar`",  parse_mode=telegram.ParseMode.MARKDOWN)
 
-def imdb(update, context):
-    se = context.args
-    imdb_base_url = "https://yts.mx/api/v2/list_movies.json?query_term="
-    imdb_r = requests.get(f"{imdb_base_url}{se}")
-    status_code = imdb_r.status_code
-    if status_code == 200:
-        imdb_data = json.loads(imdb_r.text)
-        if len(imdb_data['data']['movies']) ==1:
-            imdb_title = imdb_data['data']['movies'][0]['title_long']
-            movie_hash = imdb_data['data']['movies'][0]['torrents'][0]['hash']
-            quality = imdb_data['data']['movies'][0]['torrents'][0]['quality']
-            movie_type = imdb_data['data']['movies'][0]['torrents'][0]['type']
-            movie_banner = imdb_data['data']['movies'][0]['medium_cover_image']
-            update.message.reply_text(imdb_title)
-            update.message.bot.send_photo(update.message.chat_id, movie_banner)
-            enc_movie = urllib.parse.quote(imdb_title+quality+movie_type) 
-            if quality == "720p":
-                magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://tracker.leechers-paradise.org:6969&udp://p4p.arenabg.ch:1337&udp://tracker.internetwarriors.net:1337'  
-            headers = {
-            'accept': 'application/json',
-            'Authorization': 'Bearer briefly',
-            # Already added when you pass json= but not when you pass data=
-            # 'Content-Type': 'application/json',
-            }
-
-            params = {
-            'api_token': TOKEN_TINY_URL
-            }
-
-            json_data = {
-            'url': f'{magnet}',
-            'domain': 'tiny.one'
-            }
-
-            r = requests.post('https://api.tinyurl.com/create', headers=headers, params=params, json=json_data)
-            data = json.loads(r.text)
-            update.message.reply_text(data['data']['tiny_url'])
-
+def Search(update, context): 
+    try:
+        q = context.args
+        if not q:
+            context.bot.send_message(chat_id=update.message.chat_id, text=f"*Use /Search command to find a movie to get download id.", 
+            parse_mode=telegram.ParseMode.MARKDOWN)
         else:    
-            for x in range(1, len(imdb_data['data']['movies'])):
-                imdb_title = imdb_data['data']['movies'][x]['title_long']
-                movie_hash = imdb_data['data']['movies'][x]['torrents'][0]['hash']
-                quality = imdb_data['data']['movies'][x]['torrents'][0]['quality']
-                movie_type = imdb_data['data']['movies'][x]['torrents'][0]['type']
-                movie_banner = imdb_data['data']['movies'][x]['medium_cover_image']
-                update.message.reply_text(imdb_title)
-                update.message.bot.send_photo(update.message.chat_id, movie_banner)
-                enc_movie = urllib.parse.quote(imdb_title+quality+movie_type)
-                if quality == "720p":
-                    magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://tracker.leechers-paradise.org:6969&udp://p4p.arenabg.ch:1337&udp://tracker.internetwarriors.net:1337'
-                headers = {
-                'accept': 'application/json',
-                'Authorization': 'Bearer briefly',
-                # Already added when you pass json= but not when you pass data=
-                # 'Content-Type': 'application/json',
-                }
+            se = urllib.parse.quote(" ".join(q))
+            yts_img_url = "https://yts.mx/api/v2/list_movies.json?query_term="
+            yts_url = f"{yts_img_url}{se}"
+            yts_r = requests.get(yts_url)
+            status_code_yts = yts_r.status_code
+            if status_code_yts == 200:
+                yts_data = json.loads(yts_r.text)
+                for x in range(0, len(yts_data['data']['movies'])):      
+                    banner_title = yts_data['data']['movies'][x]['title_english']
+                    banner_year = yts_data['data']['movies'][x]['year']
+                    banner_rating = yts_data['data']['movies'][x]['rating']
+                    banner_img = yts_data['data']['movies'][x]['medium_cover_image']
+                    banner_id = yts_data['data']['movies'][x]['id']
+                    banner_text = "Title: "+banner_title+" Year: "+str(banner_year)+" rating: "+str(banner_rating)
+                    update.message.bot.send_photo(update.message.chat_id, banner_img)
+                    update.message.reply_text(banner_text)
+                    context.bot.send_message(chat_id=update.message.chat_id, text=f"*Click to copy* 👉`/Download {banner_id}`.", 
+                    parse_mode=telegram.ParseMode.MARKDOWN)
+            if status_code_yts == 525:
+                update.message.reply_text(f"🤖: Sever Down😭")
+    except KeyError as e:
+        qErr = " ".join(q)
+        update.message.reply_text(f"🤖: {qErr} 404! Item Not found 😭")
+    except TypeError:
+        update.message.reply_text(f"🤖: {se} not found 😭")
+    except IndexError:
+        context.bot.send_message(chat_id=update.message.chat_id, text=f"*Use /Search command to find a movie to get download id.", 
+                parse_mode=telegram.ParseMode.MARKDOWN)
+    except ValueError:
+        context.bot.send_message(chat_id=update.message.chat_id, text=f"*Use /Search command to find a movie to get download id.", 
+                parse_mode=telegram.ParseMode.MARKDOWN)
+    except Exception as e:
+        context.bot.send_message(chat_id=update.message.chat_id, text=f"*Click to copy* 👉 eg. `/Search Interstellar`.", 
+                parse_mode=telegram.ParseMode.MARKDOWN)
 
-                params = {
-                'api_token': 'V134WkurdBj9CaZgjv0Fj67vO7zIZf02DLmbXJpTu8TjMDfbtTmKaN46BrH3'
-                }
-
-                json_data = {
-                'url': f'{magnet}',
-                'domain': 'tiny.one'
-                }
-
-                r = requests.post('https://api.tinyurl.com/create', headers=headers, params=params, json=json_data)
-                data = json.loads(r.text)
-                update.message.reply_text(data['data']['tiny_url'])
-                    
-    else:
-        print(imdb_r.status_code)
-        update.message.reply_text("Try again")
+def Download(update, context):
+    try:
+        q = context.args
+        if not q:
+            context.bot.send_message(chat_id=update.message.chat_id, text=f"*Use /Search command to find a movie to get download id.", 
+                parse_mode=telegram.ParseMode.MARKDOWN)
+        else:        
+            se = urllib.parse.quote(" ".join(q)) 
+            imdb_base_url = "https://yts.mx/api/v2/movie_details.json?movie_id="
+            imdb_r = requests.get(f"{imdb_base_url}{se}")
+            status_code = imdb_r.status_code
+            if status_code == 200:
+                imdb_data = json.loads(imdb_r.text)
+                imdb_title = imdb_data['data']['movie']['title_long']
+                imdb_torrents = imdb_data['data']['movie']['torrents']
+                for i in range(0, len(imdb_torrents)):
+                    movie_hash = imdb_data['data']['movie']['torrents'][i]['hash']
+                    movie_type = imdb_data['data']['movie']['torrents'][i]['type']
+                    movie_quality = imdb_data['data']['movie']['torrents'][i]['quality']
+                    if movie_quality == "720p":
+                        enc_movie = urllib.parse.quote(imdb_title+movie_quality+movie_type) 
+                        magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://tracker.leechers-paradise.org:6969&udp://p4p.arenabg.ch:1337&udp://tracker.internetwarriors.net:1337'
+                        json_data = {'url': f'{magnet}','domain': 'tiny.one'}
+                        headers = {'accept': 'application/json','Authorization': 'Bearer briefly'}
+                        params = {'api_token': "TOKEN_TINY_URL"}
+                        r = requests.post('https://api.tinyurl.com/create', headers=headers, params=params, json=json_data)
+                        data = json.loads(r.text)
+                        tin_url = data['data']['tiny_url']
+                        ch_name = [[InlineKeyboardButton('uTorrent', url=f"{tin_url}")]]
+                        reply_markup = InlineKeyboardMarkup(ch_name)
+                        context.bot.send_message(chat_id=update.message.chat.id, text=f"{imdb_title}: 720p",
+                        reply_markup = reply_markup)
+                    if movie_quality == "1080p":
+                        enc_movie = urllib.parse.quote(imdb_title+movie_quality+movie_type) 
+                        magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://tracker.leechers-paradise.org:6969&udp://p4p.arenabg.ch:1337&udp://tracker.internetwarriors.net:1337' 
+                        json_data = {'url': f'{magnet}','domain': 'tiny.one'}
+                        headers = {'accept': 'application/json','Authorization': 'Bearer briefly'}
+                        params = {'api_token': "TOKEN_TINY_URL"}
+                        r = requests.post('https://api.tinyurl.com/create', headers=headers, params=params, json=json_data)
+                        data = json.loads(r.text)
+                        tin_url = data['data']['tiny_url']
+                        ch_name = [[InlineKeyboardButton('uTorrent', url=f"{tin_url}")]]
+                        reply_markup = InlineKeyboardMarkup(ch_name)
+                        context.bot.send_message(chat_id=update.message.chat.id, text=f"{imdb_title}: 1080p",
+                        reply_markup = reply_markup)
+        if status_code == 525:
+            update.message.reply_text("🤖: Drink a cup ♨️ of tea and come back")
+    except TypeError:
+        update.message.reply_text(f"🤖: {se} not found 😭")
+    except IndexError:
+        context.bot.send_message(chat_id=update.message.chat_id, text=f"*Use /Search command to find a movie to get download id.", 
+                parse_mode=telegram.ParseMode.MARKDOWN)
+    except ValueError:
+        context.bot.send_message(chat_id=update.message.chat_id, text=f"*Use /Search command to find a movie to get download id.", 
+                parse_mode=telegram.ParseMode.MARKDOWN)
+    except Exception as e:
+        context.bot.send_message(chat_id=update.message.chat_id, text=f"*Find a movie to download Click to copy* 👉eg. `/Search Gravity`.", 
+                parse_mode=telegram.ParseMode.MARKDOWN)
+    
 
 def unknown_text(update, context):
-    update.message.reply_text(
-        "Sorry I can't recognize you , you said '%s'" % update.message.text)
-  
-def unknown(update, context):
-    update.message.reply_text(
-        "Sorry I can't recognize the command , you said '%s'" % update.message.text)
+    update.message.reply_text("Sorry I can't recognize you , you said '%s'" % update.message.text)
 
 def error(update, context):
     context.bot.send_message(update.message.chat.id, error)
 
 def main():
-    
-    #to get the updates from bot
     updater = Updater(token=TOKEN, use_context=True)
-
-    #to dispatch the updates to respective handlers
     updater.dispatcher.add_handler(CommandHandler('start', start))
-    updater.dispatcher.add_handler(CommandHandler('flick', imdb))
+    updater.dispatcher.add_handler(CommandHandler('Download', Download))
+    updater.dispatcher.add_handler(CommandHandler('Search', Search))
+    updater.dispatcher.add_handler(CommandHandler('Help', Help))
     updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown_text))
-    updater.dispatcher.add_handler(MessageHandler(Filters.command, unknown))
     updater.dispatcher.add_error_handler(error)
-
 
 #commandhandler for start command
     #to start webhook
