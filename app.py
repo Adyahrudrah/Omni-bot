@@ -94,7 +94,7 @@ def Download(update, context):
                         magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://tracker.leechers-paradise.org:6969&udp://p4p.arenabg.ch:1337&udp://tracker.internetwarriors.net:1337'
                         json_data = {'url': f'{magnet}','domain': 'tiny.one'}
                         headers = {'accept': 'application/json','Authorization': 'Bearer briefly'}
-                        params = {'api_token': "TOKEN_TINY_URL"}
+                        params = {'api_token': TOKEN_TINY_URL}
                         r = requests.post('https://api.tinyurl.com/create', headers=headers, params=params, json=json_data)
                         data = json.loads(r.text)
                         tin_url = data['data']['tiny_url']
@@ -107,7 +107,7 @@ def Download(update, context):
                         magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://tracker.leechers-paradise.org:6969&udp://p4p.arenabg.ch:1337&udp://tracker.internetwarriors.net:1337' 
                         json_data = {'url': f'{magnet}','domain': 'tiny.one'}
                         headers = {'accept': 'application/json','Authorization': 'Bearer briefly'}
-                        params = {'api_token': "TOKEN_TINY_URL"}
+                        params = {'api_token': TOKEN_TINY_URL}
                         r = requests.post('https://api.tinyurl.com/create', headers=headers, params=params, json=json_data)
                         data = json.loads(r.text)
                         tin_url = data['data']['tiny_url']
