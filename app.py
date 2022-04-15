@@ -18,7 +18,7 @@ def start(update, context):
     help_button = [[KeyboardButton('/Help')]]
     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Hello {user_name} Welcome to Omni--Bot (Dev: S1V4P4ND1)")
     context.bot.send_message(chat_id=update.effective_chat.id,
-    text=f"Lokking for a Movie? Click this command to copy 👉 `/Search Interstellar`",  parse_mode=telegram.ParseMode.MARKDOWN)
+    text=f"Looking for a Movie? Click this command to copy 👉 `/Search Interstellar`",  parse_mode=telegram.ParseMode.MARKDOWN)
     context.bot.send_message(chat_id=update.effective_chat.id, text="""<---Available commands--->
     /Help, /Search '{Movie Name}'
     /Download {id}""",
