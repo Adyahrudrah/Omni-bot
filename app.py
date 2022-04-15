@@ -15,14 +15,12 @@ bot = telegram.Bot(token=TOKEN)
 
 def start(update, context):
     user_name = update.effective_chat.username
-    help_button = [[KeyboardButton('/Help')]]
     context.bot.send_message(chat_id=update.effective_chat.id, text=f"Hello {user_name} Welcome to Omni--Bot (Dev: S1V4P4ND1)")
     context.bot.send_message(chat_id=update.effective_chat.id,
     text=f"Looking for a Movie? Click this command to copy 👉 `/Search Interstellar`",  parse_mode=telegram.ParseMode.MARKDOWN)
     context.bot.send_message(chat_id=update.effective_chat.id, text="""<---Available commands--->
     /Help, /Search '{Movie Name}'
-    /Download {id}""",
-     reply_markup=ReplyKeyboardMarkup(help_button, resize_keyboard=True, one_time_keyboard=True))
+    /Download {id}"""))
 
 def Help(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
