@@ -15,7 +15,7 @@ bot = telegram.Bot(token=TOKEN)
 
 def start(update, context):
     user_name = update.effective_chat.username
-    context.bot.send_message(chat_id=update.effective_chat.id, text=f"Hello {user_name}")
+    context.bot.send_message(chat_id=update.effective_chat.id, text=f"Hello {user_name} ❤️")
 
 def Help(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id,
