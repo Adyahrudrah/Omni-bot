@@ -142,7 +142,7 @@ def main():
     #to start webhook
     updater.start_webhook(listen="0.0.0.0",port=os.environ.get("PORT",443),
                           url_path=TOKEN,
-                          webhook_url="https://binge--bot.herokuapp.com/"+TOKEN)
+                          webhook_url="https://binge-bot.herokuapp.com/"+TOKEN)
     updater.idle()
 
 #start application with main function
