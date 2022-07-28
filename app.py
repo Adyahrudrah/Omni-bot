@@ -84,7 +84,7 @@ def Download(update, context):
                     movie_quality = imdb_data['data']['movie']['torrents'][i]['quality']
                     if movie_quality == "720p":
                         enc_movie = urllib.parse.quote(imdb_title+movie_quality+movie_type) 
-                        magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://tracker.leechers-paradise.org:6969&udp://p4p.arenabg.ch:1337&udp://tracker.internetwarriors.net:1337'
+                        magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://open.demonii.com:1337/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://p4p.arenabg.com:1337&udp://tracker.leechers-paradise.org:6969'
                         json_data = {'url': f'{magnet}','domain': 'tiny.one'}
                         headers = {'accept': 'application/json','Authorization': 'Bearer briefly'}
                         params = {'api_token': TOKEN_TINY_URL}
@@ -97,7 +97,7 @@ def Download(update, context):
                         reply_markup = reply_markup)
                     if movie_quality == "1080p":
                         enc_movie = urllib.parse.quote(imdb_title+movie_quality+movie_type) 
-                        magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://tracker.leechers-paradise.org:6969&udp://p4p.arenabg.ch:1337&udp://tracker.internetwarriors.net:1337' 
+                        magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://open.demonii.com:1337/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://p4p.arenabg.com:1337&udp://tracker.leechers-paradise.org:6969' 
                         json_data = {'url': f'{magnet}','domain': 'tiny.one'}
                         headers = {'accept': 'application/json','Authorization': 'Bearer briefly'}
                         params = {'api_token': TOKEN_TINY_URL}
