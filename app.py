@@ -83,32 +83,28 @@ def Download(update, context):
                     movie_type = imdb_data['data']['movie']['torrents'][i]['type']
                     movie_quality = imdb_data['data']['movie']['torrents'][i]['quality']
                     if movie_quality == "720p":
-                        #enc_movie = urllib.parse.quote(imdb_title+movie_quality+movie_type) 
-                        #magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://open.demonii.com:1337/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://p4p.arenabg.com:1337&udp://tracker.leechers-paradise.org:6969'
-                        magnet = urllib.parse.quote(f'magnet:?xt=urn:btih:{movie_hash}&dn={imdb_title+movie_quality+movie_type}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://open.demonii.com:1337/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://p4p.arenabg.com:1337&udp://tracker.leechers-paradise.org:6969')
-
-                        json_data = {'url': f'{magnet}','domain': 'tiny.one'}
-                        headers = {'accept': 'application/json','Authorization': 'Bearer briefly'}
-                        params = {'api_token': TOKEN_TINY_URL}
-                        r = requests.post('https://api.tinyurl.com/create', headers=headers, params=params, json=json_data)
-                        data = json.loads(r.text)
-                        tin_url = data['data']['tiny_url']
-                        ch_name = [[InlineKeyboardButton('uTorrent', url=f"{tin_url}")]]
+                        enc_movie = urllib.parse.quote(imdb_title+movie_quality+movie_type) 
+                        magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://open.demonii.com:1337/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://p4p.arenabg.com:1337&udp://tracker.leechers-paradise.org:6969'
+                        #json_data = {'url': f'{magnet}','domain': 'tiny.one'}
+                        #headers = {'accept': 'application/json','Authorization': 'Bearer briefly'}
+                        #params = {'api_token': TOKEN_TINY_URL}
+                        #r = requests.post('https://api.tinyurl.com/create', headers=headers, params=params, json=json_data)
+                        #data = json.loads(r.text)
+                        #tin_url = data['data']['tiny_url']
+                        ch_name = [[InlineKeyboardButton('uTorrent', text=f"{magnet}")]]
                         reply_markup = InlineKeyboardMarkup(ch_name)
                         context.bot.send_message(chat_id=update.message.chat.id, text=f"{imdb_title}: 720p",
                         reply_markup = reply_markup)
                     if movie_quality == "1080p":
-                        #enc_movie = urllib.parse.quote(imdb_title+movie_quality+movie_type) 
-                        #magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://open.demonii.com:1337/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://p4p.arenabg.com:1337&udp://tracker.leechers-paradise.org:6969' 
-                        magnet = urllib.parse.quote(f'magnet:?xt=urn:btih:{movie_hash}&dn={imdb_title+movie_quality+movie_type}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://open.demonii.com:1337/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://p4p.arenabg.com:1337&udp://tracker.leechers-paradise.org:6969')
-
-                        json_data = {'url': f'{magnet}','domain': 'tiny.one'}
-                        headers = {'accept': 'application/json','Authorization': 'Bearer briefly'}
-                        params = {'api_token': TOKEN_TINY_URL}
-                        r = requests.post('https://api.tinyurl.com/create', headers=headers, params=params, json=json_data)
-                        data = json.loads(r.text)
-                        tin_url = data['data']['tiny_url']
-                        ch_name = [[InlineKeyboardButton('uTorrent', url=f"{tin_url}")]]
+                        enc_movie = urllib.parse.quote(imdb_title+movie_quality+movie_type) 
+                        magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=http://track.one:1234/announce&tr=udp://track.two:80&udp://open.demonii.com:1337/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://p4p.arenabg.com:1337&udp://tracker.leechers-paradise.org:6969'
+                        #json_data = {'url': f'{magnet}','domain': 'tiny.one'}
+                        #headers = {'accept': 'application/json','Authorization': 'Bearer briefly'}
+                        #params = {'api_token': TOKEN_TINY_URL}
+                        #r = requests.post('https://api.tinyurl.com/create', headers=headers, params=params, json=json_data)
+                        #data = json.loads(r.text)
+                        #tin_url = data['data']['tiny_url']
+                        ch_name = [[InlineKeyboardButton('uTorrent', text=f"{magnet}")]]
                         reply_markup = InlineKeyboardMarkup(ch_name)
                         context.bot.send_message(chat_id=update.message.chat.id, text=f"{imdb_title}: 1080p",
                         reply_markup = reply_markup)
