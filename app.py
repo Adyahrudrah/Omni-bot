@@ -86,7 +86,7 @@ def Download(update, context):
                         enc_movie = urllib.parse.quote(imdb_title+movie_quality+movie_type) 
                         magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=udp://track.two:80&udp://open.demonii.com:1337/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://p4p.arenabg.com:1337&udp://tracker.leechers-paradise.org:6969'
                         json_data = {'url': f'{magnet}','domain': 'tiny.one'}
-                        headers = {'accept': 'application/json','Authorization': 'Bearer briefly'}
+                        headers = {'accept': 'application/json','Content-Type' : 'application/json'}
                         params = {'api_token': TOKEN_TINY_URL}
                         r = requests.post('https://api.tinyurl.com/create', headers=headers, params=params, json=json_data)
                         data = json.loads(r.text)
@@ -99,7 +99,7 @@ def Download(update, context):
                         enc_movie = urllib.parse.quote(imdb_title+movie_quality+movie_type) 
                         magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=udp://track.two:80&udp://open.demonii.com:1337/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://p4p.arenabg.com:1337&udp://tracker.leechers-paradise.org:6969'
                         json_data = {'url': f'{magnet}','domain': 'tiny.one'}
-                        headers = {'accept': 'application/json','Authorization': 'Bearer briefly'}
+                        headers = {'accept': 'application/json','Content-Type' : 'application/json'}
                         params = {'api_token': TOKEN_TINY_URL}
                         r = requests.post('https://api.tinyurl.com/create', headers=headers, params=params, json=json_data)
                         data = json.loads(r.text)
