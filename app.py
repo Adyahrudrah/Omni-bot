@@ -42,8 +42,10 @@ def Search(update, context):
                     banner_img = yts_data['data']['movies'][x]['medium_cover_image']
                     banner_id = yts_data['data']['movies'][x]['id']
                     banner_text = "Title: "+banner_title+" Year: "+str(banner_year)+" rating: "+str(banner_rating)
+                    banner_yt_trailer_id = yts_data['data']['movies'][x]['yt_trailer_code']
                     update.message.bot.send_photo(update.message.chat_id, banner_img)
                     update.message.reply_text(banner_text)
+                    update.message.reply_text("https://www.youtube.com/embed/"+banner_yt_trailer_id)
                     context.bot.send_message(chat_id=update.message.chat_id, text=f"*Click to copy* 👉`/Download {banner_id}`.", 
                     parse_mode=telegram.ParseMode.MARKDOWN)
             if status_code_yts == 525:
