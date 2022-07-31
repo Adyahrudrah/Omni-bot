@@ -39,9 +39,9 @@ def Search(update, context):
                     banner_title = yts_data['data']['movies'][x]['title_english']
                     banner_year = yts_data['data']['movies'][x]['year']
                     banner_rating = yts_data['data']['movies'][x]['rating']
-                    banner_img = yts_data['data']['movies'][x]['medium_cover_image']
+                    banner_img = yts_data['data']['movies'][x]['large_cover_image']
                     banner_id = yts_data['data']['movies'][x]['id']
-                    banner_text = "Title: "+banner_title+" Year: "+str(banner_year)+" rating: "+str(banner_rating)
+                    banner_text = "Title: "+banner_title+" Year: "+str(banner_year)+"IMDB rating: "+str(banner_rating)
                     banner_yt_trailer_id = yts_data['data']['movies'][x]['yt_trailer_code']
                     update.message.bot.send_photo(update.message.chat_id, banner_img)
                     update.message.reply_text(banner_text)
@@ -84,6 +84,7 @@ def Download(update, context):
                     movie_hash = imdb_data['data']['movie']['torrents'][i]['hash']
                     movie_type = imdb_data['data']['movie']['torrents'][i]['type']
                     movie_quality = imdb_data['data']['movie']['torrents'][i]['quality']
+                    movie_size = imdb_data['data']['movie']['torrents'][i]['size']
                     if movie_quality == "720p":
                         enc_movie = urllib.parse.quote(imdb_title+movie_quality+movie_type) 
                         magnet = f'magnet:?xt=urn:btih:{movie_hash}&dn={enc_movie}+YTS.MX&tr=udp://track.two:80&udp://open.demonii.com:1337/announce&udp://tracker.openbittorrent.com:80&udp://tracker.coppersurfer.tk:6969&udp://glotorrents.pw:6969/announce&udp://tracker.opentrackr.org:1337/announce&udp://torrent.gresille.org:80/announce&udp://p4p.arenabg.com:1337&udp://tracker.leechers-paradise.org:6969'
@@ -95,7 +96,7 @@ def Download(update, context):
                         tin_url = data['data']['tiny_url']
                         ch_name = [[InlineKeyboardButton('uTorrent', url=f"{tin_url}")]]
                         reply_markup = InlineKeyboardMarkup(ch_name)
-                        context.bot.send_message(chat_id=update.message.chat.id, text=f"{imdb_title}: 720p",
+                        context.bot.send_message(chat_id=update.message.chat.id, text=f"{imdb_title}: 720p ~ {movie_size}",
                         reply_markup = reply_markup)
                     if movie_quality == "1080p":
                         enc_movie = urllib.parse.quote(imdb_title+movie_quality+movie_type) 
@@ -108,7 +109,7 @@ def Download(update, context):
                         tin_url = data['data']['tiny_url']
                         ch_name = [[InlineKeyboardButton('uTorrent', url=f"{tin_url}")]]
                         reply_markup = InlineKeyboardMarkup(ch_name)
-                        context.bot.send_message(chat_id=update.message.chat.id, text=f"{imdb_title}: 1080p",
+                        context.bot.send_message(chat_id=update.message.chat.id, text=f"{imdb_title}: 1080p ~ {movie_size}",
                         reply_markup = reply_markup)
         if status_code == 525:
             update.message.reply_text("🤖: Drink a cup ♨️ of tea and come back")
