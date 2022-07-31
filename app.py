@@ -41,7 +41,7 @@ def Search(update, context):
                     banner_rating = yts_data['data']['movies'][x]['rating']
                     banner_img = yts_data['data']['movies'][x]['large_cover_image']
                     banner_id = yts_data['data']['movies'][x]['id']
-                    banner_text = "Title: "+banner_title+" Year: "+str(banner_year)+"IMDB rating: "+str(banner_rating)
+                    banner_text = "Title: "+banner_title+" Year: "+str(banner_year)+ " IMDB rating: "+str(banner_rating)
                     banner_yt_trailer_id = yts_data['data']['movies'][x]['yt_trailer_code']
                     update.message.bot.send_photo(update.message.chat_id, banner_img)
                     update.message.reply_text(banner_text)
