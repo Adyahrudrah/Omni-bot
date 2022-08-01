@@ -127,49 +127,7 @@ def Download(update, context):
     
 
 def unknown_text(update, context):
-#     update.message.reply_text("Sorry I can't recognize you , you said '%s'" % update.message.text)
-try:
-        q = context.args
-        if not q:
-            context.bot.send_message(chat_id=update.message.chat_id, text=f"*Use /Search command to find a movie to get download id.", 
-            parse_mode=telegram.ParseMode.MARKDOWN)
-        else:    
-            se = urllib.parse.quote(" ".join(q))
-            yts_img_url = "https://yts.mx/api/v2/list_movies.json?query_term="
-            yts_url = f"{yts_img_url}{se}"
-            yts_r = requests.get(yts_url)
-            status_code_yts = yts_r.status_code
-            if status_code_yts == 200:
-                yts_data = json.loads(yts_r.text)
-                for x in range(0, len(yts_data['data']['movies'])):      
-                    banner_title = yts_data['data']['movies'][x]['title_english']
-                    banner_year = yts_data['data']['movies'][x]['year']
-                    banner_rating = yts_data['data']['movies'][x]['rating']
-                    banner_img = yts_data['data']['movies'][x]['large_cover_image']
-                    banner_id = yts_data['data']['movies'][x]['id']
-                    banner_text = "Title: "+banner_title+" Year: "+str(banner_year)+ " IMDB rating: "+str(banner_rating)
-                    banner_yt_trailer_id = yts_data['data']['movies'][x]['yt_trailer_code']
-                    update.message.bot.send_photo(update.message.chat_id, banner_img)
-                    update.message.reply_text(banner_text)
-                    update.message.reply_text("https://www.youtube.com/embed/"+banner_yt_trailer_id)
-                    context.bot.send_message(chat_id=update.message.chat_id, text=f"*Click to copy* 👉`/Download {banner_id}`.", 
-                    parse_mode=telegram.ParseMode.MARKDOWN)
-            if status_code_yts == 525:
-                update.message.reply_text(f"🤖: Sever Down😭")
-    except KeyError as e:
-        qErr = " ".join(q)
-        update.message.reply_text(f"🤖: {qErr} 404! Item Not found 😭")
-    except TypeError:
-        update.message.reply_text(f"🤖: {se} not found 😭")
-    except IndexError:
-        context.bot.send_message(chat_id=update.message.chat_id, text=f"*Use /Search command to find a movie to get download id.", 
-                parse_mode=telegram.ParseMode.MARKDOWN)
-    except ValueError:
-        context.bot.send_message(chat_id=update.message.chat_id, text=f"*Use /Search command to find a movie to get download id.", 
-                parse_mode=telegram.ParseMode.MARKDOWN)
-    except Exception as e:
-        context.bot.send_message(chat_id=update.message.chat_id, text=f"*Click to copy* 👉 eg. `/Search Interstellar`.", 
-                parse_mode=telegram.ParseMode.MARKDOWN)
+update.message.reply_text("Sorry I can't recognize you , you said '%s'" % update.message.text)
 
 def error(update, context):
     context.bot.send_message(update.message.chat.id, error)
