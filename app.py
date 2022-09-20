@@ -29,7 +29,7 @@ def Search(update, context):
             parse_mode=telegram.ParseMode.MARKDOWN)
         else:    
             se = urllib.parse.quote(" ".join(q))
-            yts_img_url = "https://yts.mx/api/v2/list_movies.json?query_term="
+            yts_img_url = "https://yts.torrentbay.to/api/v2/list_movies.json?query_term="
             yts_url = f"{yts_img_url}{se}"
             yts_r = requests.get(yts_url)
             status_code_yts = yts_r.status_code
@@ -73,7 +73,7 @@ def Download(update, context):
                 parse_mode=telegram.ParseMode.MARKDOWN)
         else:        
             se = urllib.parse.quote(" ".join(q)) 
-            imdb_base_url = "https://yts.mx/api/v2/movie_details.json?movie_id="
+            imdb_base_url = "https://yts.torrentbay.to/api/v2/movie_details.json?movie_id="
             imdb_r = requests.get(f"{imdb_base_url}{se}")
             status_code = imdb_r.status_code
             if status_code == 200:
