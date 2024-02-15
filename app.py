@@ -145,7 +145,7 @@ def main():
     #to start webhook
     updater.start_webhook(listen="0.0.0.0",port=os.environ.get("PORT",443),
                           url_path=TOKEN,
-                          webhook_url="https://omni-bot.vercel.app/"+TOKEN)
+                          webhook_url="https://omni-bot-sable.vercel.app/"+TOKEN)
     updater.idle()
 
 #start application with main function
